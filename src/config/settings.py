@@ -25,6 +25,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_cleanup',
+
+    # my apps
+    'apps.account.apps.AccountConfig',
 ]
 
 MIDDLEWARE = [
@@ -71,6 +74,13 @@ DATABASES = {
         "PORT": os.environ.get("DATABASE_PORT", "5432"),
     }
 }
+
+# Authentication
+AUTHENTICATION_BACKENDS = (
+    'apps.account.backends.AuthBackend',
+)
+
+AUTH_USER_MODEL = 'account.User'
 
 
 # Password validation
