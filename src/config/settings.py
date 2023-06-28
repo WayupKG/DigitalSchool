@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django_cleanup',
 
     # my apps
+    'apps.school.apps.SchoolConfig',
     'apps.account.apps.AccountConfig',
 ]
 
