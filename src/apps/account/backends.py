@@ -31,7 +31,7 @@ class AuthBackend(ModelBackend):
     def down_cast_user_type(self, username: str, field='username'):
         for model in self.model_list:
             if field == 'username':
-                user = model.objects.filter(phone=username)
+                user = model.objects.filter(Q(username=username) | Q(phone=username))
             else:
                 user = model.objects.filter(id=username)
             if user.exists():
