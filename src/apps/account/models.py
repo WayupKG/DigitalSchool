@@ -13,7 +13,7 @@ from common.upload_to_file import user_avatar
 
 class User(AbstractUser):
     """"""
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     GENDER: tuple[tuple[str]] = (
         (const.MEN, 'Мужчина'),
         (const.WOMEN, 'Женщина'),
@@ -24,7 +24,7 @@ class User(AbstractUser):
         (const.STUDENT, 'Ученик'),
     )
     phone = models.CharField('Номер телефона', max_length=255, unique=True)
-    date_birth = models.DateField('Дата рождение')
+    date_birth = models.DateField('Дата рождение', null=True)
     gender = models.CharField('Пол', max_length=10, choices=GENDER, default=const.MEN)
     user_type = models.CharField(choices=USER_TYPE, max_length=20, default=const.ADMIN, editable=False)
     avatar = ProcessedImageField(verbose_name='Обложка', upload_to=user_avatar,

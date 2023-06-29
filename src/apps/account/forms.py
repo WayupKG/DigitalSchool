@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model, authenticate
@@ -6,6 +7,8 @@ from django.db.models import Q
 
 from apps.account.models import Student
 from common.constants import DEFAULT_ERROR_MESSAGES
+
+from apps.school.models import ClassRoom, RelationshipClassRoomStudent
 
 User = get_user_model()
 
@@ -95,3 +98,64 @@ class StudentForm(BaseForm, forms.ModelForm):
             'date_birth', 'address',  'phone',
             'avatar',
         ]
+
+
+class StudentCreateForm(BaseForm, UserCreationForm):
+    """ Форма учеников """
+
+    password1 = forms.CharField(
+        label='Пароль',
+        max_length=100, required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': '············',
+                'type': 'password',
+                'id': 'user_password1',
+            }
+        )
+    )
+
+    password2 = forms.CharField(
+        label='Повторите пароль',
+        help_text=False,
+        max_length=100,
+        required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': '············',
+                'type': 'password',
+                'id': 'user_password2',
+            }
+        )
+    )
+    classroom = forms.ModelChoiceField(queryset=ClassRoom.objects.all(), label='Класс')
+
+    class Meta:
+        model = Student
+        fields = [
+            'last_name', 'first_name', 'email', 'username',
+            'gender', 'date_birth', 'address',  'phone',
+            'password1', 'password2', 'classroom',
+            'avatar',
+        ]
+        widgets = {
+            'date_birth': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+    def clean_email(self):
+        return self.cleaned_data.get('email').lower()
+
+
+    def save_classroom(self, user):
+        classroom = self.cleaned_data.get('classroom')
+        RelationshipClassRoomStudent.objects.create(classroom=classroom, student=user)
+
+    def save(self, commit=True, **kwargs):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password2"])
+        if commit:
+            user.save()
+            self.save_classroom(user)
+        return user

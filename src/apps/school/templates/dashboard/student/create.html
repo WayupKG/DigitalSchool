@@ -1,0 +1,46 @@
+{% extends 'Base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Добавить ученика{% endblock title %}
+
+{% block content %}
+        <div class="dashboard_wrap">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 mb-4">
+                    <h6 class="m-0">Добавить ученика</h6>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <form class="col-xl-12 col-lg-12 col-md-12 row" method="post" enctype="multipart/form-data">
+                    {% for field in form %}
+                        <div class="{% if field.name == 'image'  %}col-xl-12{%else%}col-xl-4{% endif %} col-lg-12 col-md-12 form-group smalls">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <div data-field="{{ field.id_for_label }}"
+                                         data-validator="stringLength"
+                                         style="color:red" class="mt-2"
+                                    >{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="col-xl-12 col-lg-12 col-md-12 form-group smalls">
+                        <button type="submit" class="btn theme-bg text-white" >Добавить</button>
+                    </div>
+                    {% csrf_token %}
+                </form>
+            </div>
+        </div>
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'js/jquery.maskedinput.min.js' %}"></script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("#id_phone").mask("+996 (111)-11-11-11");
+        });
+		document.getElementById("id_avatar").required = false;// находите эл-нт по id
+    </script>
+{% endblock script %}

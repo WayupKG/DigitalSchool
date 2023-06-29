@@ -1,0 +1,118 @@
+{% extends 'Base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Лента{% endblock title %}
+
+{% block link %}
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/DataTable/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/DataTable/css/responsive.bootstrap4.min.css' %}">
+{% endblock link %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+            <div class="dashboard_stats_wrap">
+                <div class="rounded-circle p-4 p-sm-4 d-inline-flex align-items-center justify-content-center bg-purple mb-2">
+                    <div class="position-absolute text-white h5 mb-0" style="font-size: 35px"><i
+                            class="fas fa-female"></i></div>
+                </div>
+                <div class="dashboard_stats_wrap_content"><h4>{{ woman }}</h4> <span>Количество девушек</span></div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+            <div class="dashboard_stats_wrap">
+                <div class="rounded-circle p-4 p-sm-4 d-inline-flex align-items-center justify-content-center bg-blue mb-2">
+                    <div class="position-absolute text-white h5 mb-0" style="font-size: 35px"><i
+                            class="fas fa-male"></i></div>
+                </div>
+                <div class="dashboard_stats_wrap_content"><h4>{{ man }}</h4> <span>Количество мальчиков</span></div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+            <div class="dashboard_stats_wrap">
+                <div class="rounded-circle p-4 p-sm-4 d-inline-flex align-items-center justify-content-center bg-warning mb-2">
+                    <div class="position-absolute text-white h5 mb-0" style="font-size: 25px"><i
+                            class="fas fa-users"></i></div>
+                </div>
+                <div class="dashboard_stats_wrap_content"><h4>{{ all }}</h4> <span>Всего учеников</span></div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+            <a href="{% url 'students_create' %}" class="create_students dashboard_stats_wrap bg-success text-white">
+                <div class="rounded-circle p-4 p-sm-4 d-inline-flex align-items-center justify-content-center bg-success mb-2">
+                    <div class="position-absolute text-white h5 mb-0" style="font-size: 35px"><i
+                            class="fas fa-user-plus"></i></div>
+                </div>
+                <div class="dashboard_stats_wrap_content"><h4>{{ inactive }}</h4> <span>Добавить ученика</span></div>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="DataTable">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="w-35 datatable-nosort">Ф.И.О</th>
+                                <th scope="col" class="datatable-nosort">Email</th>
+                                <th scope="col" class="datatable-nosort">Класс</th>
+                                <th scope="col" class="datatable-nosort">Поль</th>
+                                <th scope="col" class="datatable-nosort">Действие</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in items %}
+                                <tr>
+                                    <td>
+                                        <div class="smalls lg">{{ item.student.get_full_name }}</div>
+                                    </td>
+                                    <td><span class="smalls lg">{{ item.student.email }}</span></td>
+                                    <td><span class="smalls lg">{{ item.classroom }}</span></td>
+                                    <td><span class="smalls lg">{{ item.student.get_gender }}</span></td>
+                                    <td>
+                                        <div class="dropdown show">
+                                            <a class="btn btn-action" href="#" data-toggle="dropdown"
+                                               aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </a>
+                                            <div class="drp-select dropdown-menu">
+                                                <a class="dropdown-item" href="{{ item.student.get_absolute_url }}">Подробнее</a>
+                                                <a class="dropdown-item" href="{{ item.student.get_update_url }}">Изменить</a>
+                                                <a class="dropdown-item" href="{{ item.student.get_delete_url }}">Удалить</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'js/datatable-setting.js' %}"></script>
+    <script src="{% static 'plugins/DataTable/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTable/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTable/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTable/js/responsive.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTable/jquery.dataTables.min.js' %}"></script>
+    <!-- buttons for Export datatable -->
+    <script src="{% static 'plugins/DataTable/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTable/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTable/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTable/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTable/js/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTable/js/pdfmake.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTable/js/vfs_fonts.js' %}"></script>
+    <script src="{% static 'plugins/DataTable/js/jszip.min.js' %}"></script>
+{% endblock script %}

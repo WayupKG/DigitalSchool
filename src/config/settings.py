@@ -107,6 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_URL = LOGOUT_REDIRECT_URL = '/accounts/sign-in/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -132,3 +133,25 @@ MEDIA_DIRS = [MEDIA_DIR]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS').split(' ')
+
+# Send Mail
+EMAIL_USE_TLS = True
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_TITLE_FROM = os.environ.get('EMAIL_TITLE_FROM')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Celery & Redis settings
+REDIS_HOST = "127.0.0.1"
+REDIS_PORT = "6379"
+REDIS_BROKER_URL = "redis://" + REDIS_HOST + ":" + REDIS_PORT
+CELERY_BROKER_URL = REDIS_BROKER_URL
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL + "/0"
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Bishkek'
