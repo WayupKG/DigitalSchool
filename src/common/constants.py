@@ -4,6 +4,7 @@ MEN: str = 'men'
 WOMEN: str = 'women'
 STUDENT: str = 'student'
 TEACHER: str = 'teacher'
+ADMIN: str = 'admin'
 
 DEFAULT_ERROR_MESSAGES = {
     'invalid_email': _("Пользователь с такой электронной почтой не существует."),

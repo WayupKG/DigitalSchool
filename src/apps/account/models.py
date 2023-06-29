@@ -17,8 +17,14 @@ class User(AbstractUser):
         (const.MEN, 'Мужчина'),
         (const.WOMEN, 'Женщина'),
     )
+    USER_TYPE: tuple[tuple[str]] = (
+        (const.ADMIN, 'Администратор'),
+        (const.TEACHER, 'Учитель'),
+        (const.STUDENT, 'Ученик'),
+    )
     phone = models.CharField('Номер телефона', max_length=255, unique=True)
     gender = models.CharField('Пол', max_length=10, choices=GENDER, default=const.MEN)
+    user_type = models.CharField(choices=USER_TYPE, max_length=20, default=const.ADMIN, editable=False)
     avatar = ProcessedImageField(verbose_name='Обложка', upload_to=user_avatar,
                                  format='webp', processors=[ResizeToFill(500, 500)],
                                  options={'quality': 90}, null=True, blank=True)
@@ -36,6 +42,10 @@ class Teacher(User):
     """ Учитель """
     subject = models.CharField('Название предмета', max_length=100)
 
+    def save(self, *args, **kwargs):
+        self.user_type = const.TEACHER
+        super().save(**kwargs)
+
     class Meta:
         verbose_name = 'Учитель'
         verbose_name_plural = 'Учители'
@@ -44,6 +54,10 @@ class Teacher(User):
 class Student(User):
     """ Ученик """
     address = models.CharField('Адрес', max_length=255)
+
+    def save(self, *args, **kwargs):
+        self.user_type = const.STUDENT
+        super().save(**kwargs)
 
     class Meta:
         verbose_name = 'Ученик'
