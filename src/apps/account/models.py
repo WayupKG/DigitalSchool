@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
+from django.urls import reverse
 
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
@@ -58,10 +59,13 @@ class Student(User):
     """ Ученик """
     address = models.CharField('Адрес', max_length=255)
 
+    class Meta:
+        verbose_name = 'Ученик'
+        verbose_name_plural = 'Ученики'
+
     def save(self, *args, **kwargs):
         self.user_type = const.STUDENT
         super().save(**kwargs)
 
-    class Meta:
-        verbose_name = 'Ученик'
-        verbose_name_plural = 'Ученики'
+    def get_absolute_url(self):
+        return reverse('students_detail', kwargs={'uuid': str(self.id)})
