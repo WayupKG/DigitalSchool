@@ -15,6 +15,8 @@ class IsNotAuthenticatedMixin(AccessMixin):
 class AdminOrTeacherRequiredMixin(AccessMixin):
     """Убедитесь, что текущий пользователь является Учителем."""
     def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
         if not request.user.user_type in [const.ADMIN, const.TEACHER]:
             return self.handle_no_permission()
         return super().dispatch(request, *args, **kwargs)
