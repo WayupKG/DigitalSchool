@@ -37,6 +37,9 @@ class User(AbstractUser):
     def __str__(self) -> str:
         return str(self.get_full_name())
 
+    def get_gender(self):
+        return dict(self.GENDER)[self.gender]
+
 
 class Teacher(User):
     """ Учитель """
