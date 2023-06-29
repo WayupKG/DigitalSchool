@@ -1,11 +1,11 @@
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, UpdateView, DeleteView
+from django.views.generic import ListView, FormView, DetailView, UpdateView, DeleteView
 
 from apps.account.models import Teacher, Student
 from apps.account.mixins import AdminOrTeacherRequiredMixin
 
 from .models import School, ClassRoom, RelationshipClassRoomStudent, RelationshipSchoolClassRoom
-from ..account.forms import StudentForm
+from ..account.forms import StudentForm, StudentCreateForm
 
 
 class DashboardStudentListView(AdminOrTeacherRequiredMixin, ListView):
@@ -13,6 +13,17 @@ class DashboardStudentListView(AdminOrTeacherRequiredMixin, ListView):
     queryset = model.objects.select_related('classroom', 'student')
     context_object_name = 'items'
     template_name = 'dashboard/students.html'
+
+
+class DashboardStudentCreateView(AdminOrTeacherRequiredMixin, FormView):
+    model = Student
+    form_class = StudentCreateForm
+    success_url = reverse_lazy('students')
+    template_name = 'dashboard/students-create.html'
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 
 class DashboardStudentDetailView(AdminOrTeacherRequiredMixin, DetailView):
