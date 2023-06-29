@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import ListView, FormView, DetailView, UpdateView, DeleteView
 
@@ -13,6 +14,15 @@ class DashboardStudentListView(AdminOrTeacherRequiredMixin, ListView):
     queryset = model.objects.select_related('classroom', 'student')
     context_object_name = 'items'
     template_name = 'dashboard/student/list.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return self.queryset.filter(
+                Q(student__first_name__icontains=query) |
+                Q(student__last_name__icontains=query)
+            )
+        return self.queryset
 
 
 class DashboardStudentCreateView(AdminOrTeacherRequiredMixin, FormView):
