@@ -12,14 +12,14 @@ class DashboardStudentListView(AdminOrTeacherRequiredMixin, ListView):
     model = RelationshipClassRoomStudent
     queryset = model.objects.select_related('classroom', 'student')
     context_object_name = 'items'
-    template_name = 'dashboard/students.html'
+    template_name = 'dashboard/student/list.html'
 
 
 class DashboardStudentCreateView(AdminOrTeacherRequiredMixin, FormView):
     model = Student
     form_class = StudentCreateForm
     success_url = reverse_lazy('students')
-    template_name = 'dashboard/students-create.html'
+    template_name = 'dashboard/student/create.html'
 
     def form_valid(self, form):
         form.save()
@@ -30,7 +30,7 @@ class DashboardStudentDetailView(AdminOrTeacherRequiredMixin, DetailView):
     model = RelationshipClassRoomStudent
     queryset = model.objects.select_related('classroom', 'student')
     context_object_name = 'item'
-    template_name = 'dashboard/students-detail.html'
+    template_name = 'dashboard/student/detail.html'
 
     def get_object(self, queryset=None):
         return self.get_queryset().get(student__id=self.kwargs.get('uuid'))
@@ -48,7 +48,7 @@ class DashboardStudentDetailView(AdminOrTeacherRequiredMixin, DetailView):
 class DashboardStudentUpdateView(AdminOrTeacherRequiredMixin, UpdateView):
     model = Student
     form_class = StudentForm
-    template_name = 'dashboard/students-update.html'
+    template_name = 'dashboard/student/update.html'
 
     def get_object(self, queryset=None):
         return self.get_queryset().get(id=self.kwargs.get('uuid'))
@@ -58,7 +58,7 @@ class DashboardStudentDeleteView(AdminOrTeacherRequiredMixin, DeleteView):
     model = Student
     context_object_name = 'student'
     success_url = reverse_lazy("students")
-    template_name = 'dashboard/students-delete.html'
+    template_name = 'dashboard/student/delete.html'
 
     def get_object(self, queryset=None):
         return self.get_queryset().get(id=self.kwargs.get('uuid'))
