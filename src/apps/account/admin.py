@@ -28,7 +28,7 @@ class AdminUser(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if obj.pk:
-            user_database = User.objects.get(pk=obj.pk)
+            user_database = self.model.objects.get(pk=obj.pk)
             if not (check_password(form.data['password'], user_database.password) or user_database.password ==
                     form.data['password']):
                 obj.password = make_password(obj.password)
