@@ -19,22 +19,8 @@
 			<div class="clearfix"></div>
 			<!-- ============================ Dashboard: Dashboard Start ================================== -->
 			<section class="gray pt-4">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-lg-3 col-md-3">
-							<div class="dashboard-navbar">
-								<div class="d-user-avater">
-									<img src="https://via.placeholder.com/500x500" class="img-fluid avater" alt="">
-									<h4>{{ user.get_full_name }}</h4>
-									<span>{{ user.status_v }}</span>
-								</div>
-								{% include 'Base/navigation.html' %}
-							</div>
-						</div>	
-						<div class="col-lg-9 col-md-9 col-sm-12">
-                            {% block content %}{% endblock content %}
-                        </div>
-					</div>
+				<div class="container">
+                    {% block content %}{% endblock content %}
 				</div>
 			</section>
 			<!-- ============================ Dashboard: Dashboard End ================================== -->
