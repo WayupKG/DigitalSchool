@@ -53,21 +53,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for student in students %}
+                    {% for item in items %}
                         <tr>
-                            <td><div class="smalls lg">{{ student.get_full_name }}</div></td>
-                            <td><span class="smalls lg">{{ student.email }}</span></td>
-                            <td><span class="smalls lg">{{ student.classroom.all.first }}</span></td>
-                            <td><span class="smalls lg">{{ student.get_gender }}</span></td>
+                            <td><div class="smalls lg">{{ item.student.get_full_name }}</div></td>
+                            <td><span class="smalls lg">{{ item.student.email }}</span></td>
+                            <td><span class="smalls lg">{{ item.classroom }}</span></td>
+                            <td><span class="smalls lg">{{ item.student.get_gender }}</span></td>
                             <td>
                                 <div class="dropdown show">
                                     <a class="btn btn-action" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-ellipsis-h"></i>
                                     </a>
                                     <div class="drp-select dropdown-menu">
-                                        <a class="dropdown-item" href="{{ student.get_absolute_url }}">Подробнее</a>
-                                        <a class="dropdown-item" href="{{ student.get_change_url }}">Изменить</a>
-                                        <a class="dropdown-item" href="{{ student.get_remove_url }}">Удалить</a>
+                                        <a class="dropdown-item" href="{{ item.student.get_absolute_url }}">Подробнее</a>
+                                        <a class="dropdown-item" href="{{ item.student.get_change_url }}">Изменить</a>
+                                        <a class="dropdown-item" href="{{ item.student.get_remove_url }}">Удалить</a>
                                     </div>
                                 </div>
                             </td>
