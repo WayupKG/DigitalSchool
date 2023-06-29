@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model, authenticate
 from django.db.models import Q
 
+from apps.account.models import Student
 from common.constants import DEFAULT_ERROR_MESSAGES
 
 User = get_user_model()
@@ -82,3 +83,15 @@ class AuthenticationForm(BaseForm, forms.Form):
             DEFAULT_ERROR_MESSAGES.get(invalid),
             code=invalid,
         )
+
+
+class StudentForm(BaseForm, forms.ModelForm):
+    """ Форма учеников """
+
+    class Meta:
+        model = Student
+        fields = [
+            'last_name', 'first_name', 'gender',
+            'date_birth', 'address',  'phone',
+            'avatar',
+        ]

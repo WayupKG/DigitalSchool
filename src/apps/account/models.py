@@ -24,6 +24,7 @@ class User(AbstractUser):
         (const.STUDENT, 'Ученик'),
     )
     phone = models.CharField('Номер телефона', max_length=255, unique=True)
+    date_birth = models.DateField('Дата рождение')
     gender = models.CharField('Пол', max_length=10, choices=GENDER, default=const.MEN)
     user_type = models.CharField(choices=USER_TYPE, max_length=20, default=const.ADMIN, editable=False)
     avatar = ProcessedImageField(verbose_name='Обложка', upload_to=user_avatar,
@@ -69,3 +70,9 @@ class Student(User):
 
     def get_absolute_url(self):
         return reverse('students_detail', kwargs={'uuid': str(self.id)})
+
+    def get_update_url(self):
+        return reverse('students_update', kwargs={'uuid': str(self.id)})
+
+    def get_delete_url(self):
+        return reverse('students_delete', kwargs={'uuid': str(self.id)})
