@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Цифровая Школа «El-School»"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Цифровая Школа «El-School»{% endblock title %}</title>
+    {% include 'Base/links.html' %}
+    {% block link %}{% endblock link %}
+</head>
+<body>
+<div id="main-wrapper">
+    <section>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-7 col-lg-8 col-md-12 col-sm-12">
+                    <div id="loading__auth__page"></div>
+                    <form  method="POST" id="sign__in">
+                    {% csrf_token %}
+                        <div class="crs_log_wrap">
+                            <div class="crs_log__thumb">
+                                <img src="{% static 'images/more/greenboard-back-online-school.avif' %}" class="img-fluid" alt="">
+                            </div>
+                            <div class="crs_log__caption">
+                                <div class="rcs_log_123">
+                                    <div class="rcs_ico"><i class="fas fa-lock"></i></div>
+                                </div>
+                                <div class="rcs_log_124">
+                                    <div class="Lpo09"><h4>Войдите в свою учетную запись</h4></div>
+                                    <div class="form-auth-errors text-center mt-2 px-2"></div>
+                                    {% for field in form %}
+                                        <div class="form-group">
+                                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                            {{ field }}
+                                        </div>
+                                    {% endfor %}
+                                    <div class="form-group">
+                                        <button type="submit" class="btn full-width btn-md theme-bg text-white">
+                                            Авторизоваться
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="crs_log__footer d-flex justify-content-between">
+                                <div class="fhg_45"><p class="musrt"><a href=""class="theme-cl">У вас нет учетной записи?</a>
+                                </p></div>
+                                <div class="fhg_45"><p class="musrt"><a href="" class="text-danger">Забыли пароль?</a></p></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% include 'Base/scripts.html' %}
+{% block script %}{% endblock script %}
+</body>
+</html>
