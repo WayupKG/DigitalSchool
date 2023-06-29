@@ -9,7 +9,7 @@
                 <div class="mobile_nav">
                     <ul>
                         {% if user.is_authenticated %}
-                            {% include 'base/mobile_header.html' %}
+                            {% include 'Base/mobile_header.html' %}
                         {% else %}
                             <li>
                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#login" class="crs_yuo12 w-auto text-white theme-bg">
@@ -21,17 +21,12 @@
                 </div>
             </div>
             <div class="nav-menus-wrapper">
-                <ul class="nav-menu">
-                    <li class="active"><a href="">Главное</a></li>
-                    <li><a href="#">О нас</a></li>
-                </ul>
-                
                 <ul class="nav-menu nav-menu-social align-to-right">
                     {% if user.is_authenticated %}
-                        {% include 'base/mobile_header.html' %}
+                        {% include 'Base/mobile_header.html' %}
                     {% else %}
                         <li class="add-listing theme-bg">
-                            <a href="#" class="alio_green" data-toggle="modal" data-target="#login">
+                            <a href="{% url 'sign_in' %}" class="alio_green">
                                 <i class="fas fa-sign-in-alt mr-1"></i><span class="dn-lg">Войти</span>
                             </a>
                         </li>
