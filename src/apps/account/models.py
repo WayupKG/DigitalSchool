@@ -13,7 +13,7 @@ from common.upload_to_file import user_avatar
 
 class User(AbstractUser):
     """"""
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     GENDER: tuple[tuple[str]] = (
         (const.MEN, 'Мужчина'),
         (const.WOMEN, 'Женщина'),
