@@ -14,39 +14,31 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 row">
                     <div class="col-lg-4 col-md-4 col-12 form-group smalls">
                         <label>Фамилия:</label>
-                        <input type="text" class="form-control" value="{{ item.student.last_name }}" disabled/>
+                        <input type="text" class="form-control" value="{{ student.last_name }}" disabled/>
                     </div>
                     <div class="col-lg-4 col-md-4 col-12 form-group smalls">
                         <label>Имя:</label>
-                        <input type="text" class="form-control" value="{{ item.student.first_name }}" disabled/>
+                        <input type="text" class="form-control" value="{{ student.first_name }}" disabled/>
                     </div>
                     <div class="col-lg-4 col-md-4 col-12 form-group smalls">
                         <label>Email</label>
-                        <input type="text" class="form-control" value="{{ item.student.email }}" disabled/>
+                        <input type="text" class="form-control" value="{{ student.email }}" disabled/>
                     </div>
                     <div class="col-lg-4 col-md-4 col-12 form-group smalls">
                         <label>Поль</label>
-                        <input type="text" class="form-control" value="{{ item.student.get_gender }}" disabled/>
+                        <input type="text" class="form-control" value="{{ student.get_gender }}" disabled/>
                     </div>
                     <div class="col-lg-4 col-md-4 col-12 form-group smalls">
                         <label>Дата рождения</label>
-                        <input type="text" class="form-control" value="{{ item.student.date_birth }}" disabled/>
+                        <input type="text" class="form-control" value="{{ student.date_birth }}" disabled/>
                     </div>
                     <div class="col-lg-4 col-md-4 col-12 form-group smalls">
                         <label>Адрес</label>
-                        <input type="text" class="form-control" value="{{ item.student.address }}" disabled/>
+                        <input type="text" class="form-control" value="{{ student.address }}" disabled/>
                     </div>
                     <div class="col-lg-4 col-md-4 col-12 form-group smalls">
                         <label>Номер телефона</label>
-                        <input type="text" class="form-control" value="{{ item.student.phone }}" disabled/>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-12 form-group smalls">
-                        <label>Школа</label>
-                        <input type="text" class="form-control" value="{{ school.school }}" disabled/>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-12 form-group smalls">
-                        <label>Академический класс</label>
-                        <input type="text" class="form-control" value="{{ item.classroom }}" disabled/>
+                        <input type="text" class="form-control" value="{{ student.phone }}" disabled/>
                     </div>
                     <div class="col-xl-12 col-lg-12 col-md-12 form-group smalls">
                         <button class="btn btn-danger text-white">Удалить ученика</button>

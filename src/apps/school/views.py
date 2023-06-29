@@ -44,20 +44,10 @@ class DashboardStudentUpdateView(AdminOrTeacherRequiredMixin, UpdateView):
 
 
 class DashboardStudentDeleteView(AdminOrTeacherRequiredMixin, DeleteView):
-    model = RelationshipClassRoomStudent
-    queryset = model.objects.select_related('classroom', 'student')
-    context_object_name = 'item'
+    model = Student
+    context_object_name = 'student'
     success_url = reverse_lazy("students")
     template_name = 'dashboard/students-delete.html'
 
     def get_object(self, queryset=None):
-        return self.get_queryset().get(student__id=self.kwargs.get('uuid'))
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['school'] = RelationshipSchoolClassRoom.objects.select_related(
-            'school'
-        ).get(
-            classroom=self.get_object().classroom
-        )
-        return context
+        return self.get_queryset().get(id=self.kwargs.get('uuid'))
