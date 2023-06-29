@@ -14,26 +14,17 @@ class AuthBackend(ModelBackend):
     supports_anonymous_user = True
     supports_inactive_user = True
 
-    def __init__(self):
-        self.model_list = [User, Teacher, Student]
-        super().__init__()
-
     def get_user(self, user_id):
-        user = self.down_cast_user_type(user_id, 'user_id')
-        return user if user else None
+        try:
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return None
 
     def authenticate(self, request, username, password):
-        user = self.down_cast_user_type(username)
-        if user:
-            return user if user.check_password(password) else None
-        return None
-
-    def down_cast_user_type(self, username: str, field='username'):
-        for model in self.model_list:
-            if field == 'username':
-                user = model.objects.filter(Q(username=username) | Q(phone=username))
-            else:
-                user = model.objects.filter(id=username)
-            if user.exists():
-                return user.first()
-        return None
+        try:
+            user = User.objects.get(
+                Q(username=username) | Q(phone=username)
+            )
+        except User.DoesNotExist:
+            return None
+        return user if user.check_password(password) else None
